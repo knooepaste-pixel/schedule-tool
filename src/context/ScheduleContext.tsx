@@ -90,6 +90,12 @@ export function ScheduleProvider({ children }: { children: ReactNode }) {
     };
   });
 
+  const [currentSemesterId, setCurrentSemesterId] = useState<string>(() => {
+    const userId = getCurrentUserId();
+    const userSchedule = getUserSchedule(userId);
+    return userSchedule.currentSemesterId;
+  });
+
   // ── 从云端加载课表（登录成功后自动触发）─────────────
   const loadFromCloud = useCallback(async (userId: string, token: string) => {
     try {
@@ -120,12 +126,6 @@ export function ScheduleProvider({ children }: { children: ReactNode }) {
   const [semesters, setSemesters] = useState<Semester[]>(() => {
     const userId = getCurrentUserId();
     return getUserSemesters(userId);
-  });
-
-  const [currentSemesterId, setCurrentSemesterId] = useState<string>(() => {
-    const userId = getCurrentUserId();
-    const userSchedule = getUserSchedule(userId);
-    return userSchedule.currentSemesterId;
   });
 
   // 自定义时间配置状态
